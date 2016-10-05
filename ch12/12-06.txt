@@ -1,0 +1,20 @@
+function flashBkgnd(elemID, count) { 
+    // if counter is null, initialize at zero 
+    count = count || 0; 
+    // execute reference just once 
+    var elem = document.getElementById(elemID); 
+    // grab value once for multiple comparisons 
+    var currColor = elem.style.backgroundColor; 
+    if (currColor == "rgb(255, 255, 0)" || currColor ==  "#ffff00") { 
+        elem.style.backgroundColor = "#ff0000"; 
+    } else { 
+        elem.style.backgroundColor = "#ffff00"; 
+    } 
+    if (count < 10) { 
+        // call this function again in 1/10 sec., with incremented counter value 
+        setTimeout(function() {flashBkgnd(elemID, ++count)}, 100); 
+    } else { 
+        // assumes a white body background 
+        elem.style.backgroundColor = "#ffffff"; 
+    } 
+} 

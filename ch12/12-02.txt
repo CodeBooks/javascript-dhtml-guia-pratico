@@ -1,0 +1,41 @@
+var rolloverImageBank = { 
+    height : 20, 
+    width : 50, 
+    sharedImgURIs : ["img/home", "img/prod", "img/support", "img/contact"], 
+    normalSuffix : "Normal.jpg", 
+    hiliteSuffix : "Hilite.jpg", 
+    preloadImages : function() { 
+        var imgObj = new Image(this.height, this.width); 
+        for (var i = 0; i < this.sharedImgURIs.length; i++) { 
+            imgObj.src = this.sharedImgURIs[i] + this.normalSuffix; 
+            imgObj.src = this.sharedImgURIs[i] + this.hiliteSuffix; 
+        } 
+    }, 
+    toggleImage : function(evt) { 
+        evt = (evt) ? evt : event; 
+        var elem = (evt.target) ? evt.target : evt.srcElement; 
+        if (elem && elem.src) { 
+            var reOff = new RegExp("(.*)(" + this.normalSuffix + ")"); 
+            var reOn = new RegExp("(.*)(" + this.hiliteSuffix + ")"); 
+            if (reOff.test(elem.src)) { 
+                elem.src = reOff.exec(elem.src)[1] + this.hiliteSuffix; 
+            } else { 
+                elem.src = reOn.exec(elem.src)[1] + this.normalSuffix; 
+            } 
+        } 
+    } 
+}; 
+rolloverImageBank.preloadImages();
+
+function setEvents() { 
+    addEvent(document.getElementById("home"), "mouseover", 
+        function(evt) {rolloverImageBank.toggleImage(evt)}, false); 
+    addEvent(document.getElementById("home"), "mouseout", 
+        function(evt) {rolloverImageBank.toggleImage(evt)}, false); 
+    addEvent(document.getElementById("products"), "mouseover", 
+        function(evt) {rolloverImageBank.toggleImage(evt)}, false); 
+    addEvent(document.getElementById("products"), "mouseout", 
+        function(evt) {rolloverImageBank.toggleImage(evt)}, false); 
+... 
+} 
+addOnLoadEvent(setEvents);

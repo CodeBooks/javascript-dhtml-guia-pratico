@@ -1,0 +1,58 @@
+<style type="text/css"> 
+.newSpan {font: bold 16px serif; background-color: yellow} 
+</style> 
+
+------------------
+
+<p id="selectableParagraph">Lorem ipsum dolor sit amet, consectetaur 
+adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+</p>
+
+------------------
+
+var selectionManager = { 
+    selectionStart : null, 
+    // invoked by selectstart event for IE 
+    saveStart : function() {this.selectionStart = event.srcElement;}, 
+    // invoked by mouseup 
+    selection2Element : function(tagName, className) { 
+        if (document.selection && document.selection.createRange) { 
+            if (event.srcElement == this.selectionStart || 
+                event.srcElement.parentNode == this.selectionStart || 
+                event.srcElement == this.selectionStart.parentNode) { 
+                var rng = document.selection.createRange(); 
+                var newHTML = "<" + tagName + " class='" + className + "'>" + rng.text + 
+                    "</" + tagName + ">"; 
+                rng.pasteHTML(newHTML); 
+                this.selectionStart = null; 
+            } else { 
+                alert("Please restrict selections to within a single paragraph."); 
+            } 
+        } else if (document.createRange) { 
+            var sel = window.getSelection(); 
+            // Safari 2.0.4 doesn't know sel.getRangeAt(), so do it the long way 
+            var range = document.createRange(); 
+            range.setStart(sel.anchorNode, sel.anchorOffset); 
+            range.setEnd(sel.focusNode, sel.focusOffset); 
+            if (range.startContainer == range.endContainer || 
+                range.commonAncestorContainer == range.startContainer.parentNode || 
+                range.commonAncestorContainer == range.endContainer.parentNode) { 
+                var origContent = range.extractContents(); 
+                var newElem = document.createElement(tagName); 
+                newElem.setAttribute("class", className); 
+                newElem.appendChild(origContent); 
+                range.insertNode(newElem); 
+            } else { 
+                alert("Please restrict selections to within a single paragraph."); 
+            } 
+        } 
+    } 
+}
+function setEvents() { 
+    addEvent(document.getElementById("selectableParagraph"), "mouseup", 
+        function() {selectionManager.selection2Element("span", "newSpan");}, false); 
+    addEvent(document.getElementById("selectableParagraph"), "selectstart", 
+        function() {selectionManager.saveStart();}, false); 
+} 
+addOnLoadEvent(setEvents);
+

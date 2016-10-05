@@ -1,0 +1,11 @@
+function getElementPosition(elemID) { 
+    var offsetTrail = document.getElementById(elemID); 
+    var offsetLeft = 0; 
+    var offsetTop = 0; 
+    while (offsetTrail) { 
+        offsetLeft += offsetTrail.offsetLeft; 
+        offsetTop += offsetTrail.offsetTop; 
+        offsetTrail = offsetTrail.offsetParent; 
+    } 
+    return {left:offsetLeft, top:offsetTop}; 
+}

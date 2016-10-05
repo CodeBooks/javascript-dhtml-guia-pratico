@@ -1,0 +1,29 @@
+// Requires DHTML3API.js from Recipe 13-3.
+
+// Center a positionable element whose ID is passed as 
+// a parameter in the current window/frame, and show it 
+function centerOnWindow(elemID) { 
+    // 'obj' is the positionable object 
+    var obj = DHTMLAPI.getRawObject(elemID); 
+    // window scroll factors 
+    var scrollX = 0, scrollY = 0; 
+    if (document.body && typeof document.body.scrollTop != "undefined") { 
+        scrollX += document.body.scrollLeft; 
+        scrollY += document.body.scrollTop; 
+        if (document.body.parentNode && 
+            typeof document.body.parentNode.scrollTop != "undefined" && 
+            (document.body.scrollTop != document.body.parentNode.scrollTop)) { 
+            scrollX += document.body.parentNode.scrollLeft; 
+            scrollY += document.body.parentNode.scrollTop; 
+        } 
+    } else if (typeof window.pageXOffset != "undefined") { 
+        scrollX += window.pageXOffset; 
+        scrollY += window.pageYOffset; 
+    } 
+    var x = Math.round((DHTMLAPI.getInsideWindowWidth()/2) - 
+        (DHTMLAPI.getElementWidth(obj)/2)) + scrollX; 
+    var y = Math.round((DHTMLAPI.getInsideWindowHeight()/2) - 
+        (DHTMLAPI.getElementHeight(obj)/2)) + scrollY; 
+    DHTMLAPI.moveTo(obj, x, y); 
+    DHTMLAPI.show(obj); 
+} 

@@ -1,0 +1,18 @@
+if (document.myForm.myTextBox.value.toLowerCase() == "new york") { 
+    // process correct entry 
+} 
+
+-------------------
+
+var stringA = "My dog has fleas."; 
+var stringB = new String("My dog has fleas."); 
+
+-------------------
+
+if (document.getElementById("myTextBox").value.toLowerCase() != "new york") { 
+    // process incorrect entry 
+} 
+
+-------------------
+
+if (parseInt(document.getElementById("myTextBox").value) == someNumericVar) { ... } 

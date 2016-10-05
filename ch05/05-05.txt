@@ -1,0 +1,8 @@
+var isModernSafari = false; 
+if (navigator.userAgent.indexOf("AppleWebKit") != -1) { 
+    var re = /\(.*\) AppleWebKit/(.*) \((.*)/; 
+    var webkitVersion = re.exec(ua)[1].split(".")[0]; 
+    if (webkitVersion > 312) { 
+        isModernSafari = true; 
+    } 
+} 

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media, Inc.
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Recipe 13.10</title>
+<link rel="stylesheet" id="mainStyle" href="../css/cookbook.css" type="text/css" />
+<style type="text/css">
+body {height: 400px}
+#block {
+		position: absolute; 
+		top: 200px; 
+		left: 17%; 
+		height: 200px; 
+		width: 200px; 
+		background-color: orange
+	   }
+</style>
+<script src="../js/eventsManager.js"></script>
+<script src="animeCirc.js"></script>
+</script>
+</head>
+<body>
+<h1>Circular Animation</h1>
+<hr />
+<form>
+<input type="button" value="Circle" 
+onclick="initCircAnime('block', 400, 200, 36, 20)">
+</form>
+
+<div id="block"></div>
+
+</body>
+</html>

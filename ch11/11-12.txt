@@ -1,0 +1,20 @@
+function getElementStyle(elem, CSSStyleProp) { 
+    var styleValue, camel; 
+    if (elem) { 
+        if (document.defaultView && document.defaultView.getComputedStyle) { 
+            // W3C DOM version 
+            var compStyle = document.defaultView.getComputedStyle(elem, ""); 
+            styleValue = compStyle.getPropertyValue(CSSStyleProp); 
+        } else if (elem.currentStyle) { 
+            // make IE style property camelCase name from CSS version 
+            var IEStyleProp = CSSStyleProp; 
+            var re = /-\D/; 
+            while (re.test(IEStyleProp)) { 
+                camel = IEStyleProp.match(re)[0].charAt(1).toUpperCase(); 
+                IEStyleProp = IEStyleProp.replace(re, camel); 
+            } 
+            styleValue = elem.currentStyle[IEStyleProp]; 
+        } 
+    } 
+    return (styleValue) ? styleValue : null; 
+}

@@ -1,0 +1,34 @@
+var myArray = ["Alice", "Fred", "Jean", "Steve"]; 
+for (var i = 0; i < myArray.length; i++) { 
+    alert("Item " + i + " is:" + myArray[i] + "."); 
+} 
+
+----------------------------------
+
+for (var i = myArray.length - 1; i >= 0; i--) { 
+    alert("Item " + i + " is:" + myArray[i] + "."); 
+} 
+
+----------------------------------
+
+var nameList = ["Alice", "Fred", "Jean", "Steve"]; 
+var ageList = [23, 32, 28, 24]; 
+
+function ageLookup(name) { 
+    for (var i = 0; i < nameList.length; i++) { 
+        if (nameList[i] = = name) { 
+            return ageList[i]; 
+        } 
+    return "Could not find " + name + "."; 
+} 
+
+----------------------------------
+
+function clearTextBoxes() { 
+    var allInputs = document.getElementsByTagName("input"); 
+    for (var i = 0; i < allInputs.length; i++) { 
+        if (allInputs[i].type = = "text") { 
+            allInputs[i].value = ""; 
+        } 
+    } 
+} 

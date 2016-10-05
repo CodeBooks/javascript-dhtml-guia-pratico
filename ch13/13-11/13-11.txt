@@ -1,0 +1,24 @@
+    zone: {left:120, top:120, right:400, bottom:400}, 
+
+
+    dragIt : function (evt) { 
+        evt = (evt) ? evt : window.event; 
+        var x, y, width, height; 
+        var obj = dragObject; 
+        if (evt.pageX) { 
+            x = evt.pageX - obj.offsetX; 
+            y = evt.pageY - obj.offsetY; 
+        } else if (evt.clientX || evt.clientY) { 
+            x = evt.clientX - obj.offsetX; 
+            y = evt.clientY - obj.offsetY; 
+        } 
+        width = DHTMLAPI.getElementWidth(obj.selectedObj); 
+        height = DHTMLAPI.getElementHeight(obj.selectedObj); 
+        x = (x < obj.zone.left) ? obj.zone.left : 
+           ((x + width > obj.zone.right) ? obj.zone.right - width : x); 
+        y = (y < obj.zone.top) ? obj.zone.top : 
+           ((y + height > obj.zone.bottom) ? obj.zone.bottom - height : y); 
+        DHTMLAPI.moveTo(obj.selectedObject, x, y); 
+        evt.cancelBubble = true; 
+        evt.returnValue = false; 
+    },

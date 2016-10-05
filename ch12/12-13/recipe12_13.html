@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media, Inc.
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Recipe 12.13</title>
+<link rel="stylesheet" id="mainStyle" href="../css/cookbook.css" type="text/css" />
+
+<style type="text/css">
+canvas {border: 1px black solid; background-color: white}
+#pieController {width: 196px; border: 1px solid black; padding: 2px; font-family: Arial; font-weight: bold; text-align: center}
+.selector {padding: 2px; margin: 2px}
+#data1 {background-color: rgb(51, 255, 0)}
+#data2 {background-color: rgb(255, 51, 51)}
+#data3 {background-color: rgb(51, 204, 255)}
+#data4 {background-color: rgb(255, 255, 0)}
+</style>
+<script src="../js/eventsManager.js"></script>
+<script type="text/javascript">
+function sumData(array) {
+    var result = 0;
+    for (var i = 0; i < array.length; i++) {
+        result += parseFloat(array[i]);    
+    }
+    return result;
+}
+
+function drawPie(data) {
+    var ctxt = document.getElementById("myCanvas").getContext("2d");
+    var data = data || [10, 5, 20, 10];
+    var total = sumData(data);
+    var colors = ["rgb(51, 255, 0)", "rgb(255, 51, 51)", "rgb(51, 204, 255)", "rgb(255, 255, 0)"];
+    var wedges = new Array();
+    var currAngle = 0;
+    var centerX = 100;
+    var centerY = 100;
+    var radius = 80;
+    var pct;
+    
+    // accumulate pie wedge parameters    
+    for (var i = 0; i < data.length; i++) {
+        pct = data[i]/total;
+        wedges[i] = {
+            startAngle : currAngle * Math.PI * 2,
+            endAngle : (currAngle += pct) * Math.PI * 2
+        };
+    }
+    // draw pie wedges
+    ctxt.save();
+    for (i = 0; i < wedges.length; i++) {
+        ctxt.fillStyle = colors[i];
+        ctxt.beginPath();
+        ctxt.moveTo(centerX, centerY);
+        ctxt.arc(centerX, centerY, radius, wedges[i].startAngle - Math.PI/2, wedges[i].endAngle - Math.PI/2, false);
+        ctxt.closePath();
+        ctxt.fill();
+    }
+    ctxt.restore();
+}
+
+function preparePie(evt) {
+    evt = evt || window.event;
+    var elem = evt.target || evt.srcElement;
+    var form = elem.form;
+    var data = new Array();
+    for (var i = 0; i < form.elements.length; i++) {
+        data.push(form.elements[i].value);
+    }
+    drawPie(data);
+}
+
+function setEvents() {
+    addEvent(document.getElementById("select1"), "change", 
+        preparePie, false);
+    addEvent(document.getElementById("select2"), "change", 
+        preparePie, false);
+    addEvent(document.getElementById("select3"), "change", 
+        preparePie, false);
+    addEvent(document.getElementById("select4"), "change", 
+        preparePie, false);
+}
+
+addOnLoadEvent(setEvents);
+addOnLoadEvent(function() {drawPie()});
+</script>
+</head>
+<body>
+<h1>The canvas Element</h1>
+<hr /> 
+
+<p>
+<canvas id="myCanvas" height="200" width="200"></canvas>
+</p>
+<div id="pieController">
+<form>
+<div id="data1">Data Point One: <select id="select1" class="selector">
+<option value="10">10</option>
+<option value="30">30</option>
+<option value="50">50</option>
+<option value="70">70</option></select></div>
+<div id="data2">Data Point Two: <select id="select2" class="selector">
+<option value="5">5</option>
+<option value="25">25</option>
+<option value="50">50</option>
+<option value="88">88</option></select></div>
+<div id="data3">Data Point Three: <select id="select3" class="selector">
+<option value="20">20</option>
+<option value="40">40</option>
+<option value="60">60</option>
+<option value="80">80</option></select></div>
+<div id="data4">Data Point Four: <select id="select4" class="selector">
+<option value="10">10</option>
+<option value="20">20</option>
+<option value="50">50</option>
+<option value="100">100</option></select></div>
+</form>
+</div>
+
+</body>
+</html>

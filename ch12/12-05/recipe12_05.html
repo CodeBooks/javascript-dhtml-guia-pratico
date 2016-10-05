@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media, Inc.
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Recipe 12.5</title>
+<link rel="stylesheet" id="mainStyle" href="../css/cookbook.css" type="text/css" />
+<style type="text/css">
+.largesize {height: 384px; width: 512px}
+.mediumsize {height: 192px; width: 256px}
+.smallsize {height: 77px; width: 102px}
+</style>
+<script src="../js/eventsManager.js"></script>
+<script type="text/javascript">
+function setImgSize(evt) {
+	evt = (evt) ? evt : window.event;
+	var elem = (evt.target) ? evt.target : evt.srcElement;
+	document.getElementById("seascape").className = elem.value + "size";
+}
+
+function setEvents() {
+	addEvent(document.getElementById("scale"), "click", setImgSize, false);
+}
+addOnLoadEvent(setEvents);
+</script>
+</head>
+<body>
+<h1>Image Resizing</h1>
+<hr />
+<form>
+<p id="scale">Scale: <input id="smallScale" type="radio" name="scaler" value="small">10%
+<input id="mediumScale" type="radio" name="scaler" value="medium">25%
+<input id="largeScale" type="radio" name="scaler" value="large" checked>50%
+</p>
+</form>
+<img id="seascape" class="largesize" src="pointlobos.jpg" />
+</body>
+</html>

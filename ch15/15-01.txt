@@ -1,0 +1,40 @@
+var quotes = new Array(); 
+quotes[quotes.length] = {quote:"One should eat to live, and not live to eat.", 
+                          author:"Moliere"}; 
+quotes[quotes.length] = {quote:"For man is man and master of his fate.", 
+                          author:"Tennyson"}; 
+quotes[quotes.length] = {quote:"History is more or less bunk.", 
+                          author:"Henry Ford"}; 
+quotes[quotes.length] = {quote:"You should never have your best trousers on when you 
+                          turn out to fight for freedom and truth.", 
+                          author:"Ibsen"}; 
+quotes[quotes.length] = {quote:"It is vain and foolish to talk of knowing Greek.", 
+                          author:"Woolf"}; 
+
+
+function insertSaying(targetElemID) { 
+    var currIndex = Math.floor(Math.random() * (quotes.length)); 
+    var pElem = document.createElement("p"); 
+    pElem.className= "quote"; 
+    pElem.appendChild(document.createTextNode(quotes[currIndex].quote)); 
+    var sElem = document.createElement("span"); 
+    sElem.className = "author"; 
+    sElem.appendChild(document.createTextNode(" -- " + quotes[currIndex].author)); 
+    pElem.appendChild(sElem); 
+    document.getElementById(targetElemID).appendChild(pElem); 
+}
+
+-----------------------
+
+var imgLinks = new Array(); 
+imgLinks[imgLinks.length] = {src:"images/prods/x25.jpg", url="products/x25.html", 
+    alt="X25 Super Widget"}; 
+... 
+function getRandomImage(imgElemID) { 
+    var currIndex = Math.floor(Math.random() * (quotes.length)); 
+    var imgElem = document.getElementById(imgElemID); 
+    var aElem = imgElem.parentNode; 
+    imgElem.src = imgLinks[currIndex].src; 
+    imgElem.alt = imgLinks[currindex].alt; 
+    aElem.href = imgLinks[currIndex].url; 
+}

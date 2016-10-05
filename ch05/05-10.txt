@@ -1,0 +1,11 @@
+var cssFile; 
+if (document.implementation.hasFeature("CSS2", "2.0")) { 
+    cssFile = "styles/corpStyle2.css"; 
+} else { 
+    cssFile = "styles/corpStyle1.css"; 
+} 
+document.write("<link rel='stylesheet' type='text/css' href='" + cssFile + "'>"); 
+
+---------------------------
+
+document.implementation.hasFeature("Core", "3.0") 

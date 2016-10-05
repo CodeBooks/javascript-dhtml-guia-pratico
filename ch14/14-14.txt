@@ -1,0 +1,11 @@
+function getElementsByClassName(className) {
+    var allElements = (document.all) ? document.all : document.getElementsByTagName("*");
+    var results = new Array();
+    var re = new RegExp("\\b" + className + "\\b");
+    for (var i = 0; i < allElements.length; i++) {
+        if (re.test(allElements[i].className)) {
+            results.push(allElements[i]);
+        }
+    }
+    return results;
+}

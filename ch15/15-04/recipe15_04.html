@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media, Inc.
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Recipe 15.4</title>
+<link rel="stylesheet" id="mainStyle" href="../css/cookbook.css" type="text/css" />
+<style type="text/css">
+iframe {margin: 5px; background-color: white}
+</style>
+<script src="../js/eventsManager.js"></script>
+<script src="editor.js"></script>
+<script type="text/javascript">
+function setEvents() {
+    addEvent(document.getElementById("fontColorChooser"), "change", editableDoc.setFontColor, false);
+    addEvent(document.getElementById("fontStyleChooser"), "change", editableDoc.setFontStyle, false);
+    addEvent(document.getElementById("fontFamilyChooser"), "change", editableDoc.setFontFamily, false);
+}
+addOnLoadEvent(function() {editableDoc.init("editableIframe")});
+addOnLoadEvent(setEvents);
+</script>
+</head>
+<body>
+<h1>Editable Content</h1>
+<hr /> 
+
+<div>
+<form>
+Font Color: <select id="fontColorChooser">
+    <option value="black" selected="selected">Black</option>
+    <option value="red">Red</option>
+    <option value="green">Green</option>
+    <option value="blue">Blue</option>
+</select>
+Font Style: <select id="fontStyleChooser">
+    <option value="removeformat" selected="selected">Normal</option>
+    <option value="bold">Bold</option>
+    <option value="italic">Italic</option>
+    <option value="underline">Underline</option>
+    <option value="strikethrough">Strikethrough</option>
+</select>
+Font Family: <select id="fontFamilyChooser">
+    <option value="serif" selected="selected">Serif</option>
+    <option value="sans-serif">Sans-serif</option>
+    <option value="monospace">Mono</option>
+    <option value="comic sans ms">Comic Sans</option>
+</select>
+</form>
+</div>
+<iframe id="editableIframe" src="sample.html" width="400" height="300"></iframe>
+</body>
+</html>

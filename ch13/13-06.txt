@@ -1,0 +1,17 @@
+function centerOnElement(baseElemID, posElemID) { 
+    baseElem = document.getElementById(baseElemID); 
+    posElem = document.getElementById(posElemID); 
+    var offsetTrail = baseElem; 
+    var offsetLeft = 0; 
+    var offsetTop = 0; 
+    // accumulate offset values 
+    while (offsetTrail) { 
+        offsetLeft += offsetTrail.offsetLeft; 
+        offsetTop += offsetTrail.offsetTop; 
+        offsetTrail = offsetTrail.offsetParent; 
+    } 
+    posElem.style.left = offsetLeft + parseInt(baseElem.offsetWidth/2) - 
+        parseInt(posElem.offsetWidth/2) + "px" 
+    posElem.style.top = offsetTop + parseInt(baseElem.offsetHeight/2) - 
+        parseInt(posElem.offsetHeight/2)+ "px" 
+} 

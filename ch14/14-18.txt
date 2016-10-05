@@ -1,0 +1,38 @@
+// constructor function for an XML request object; 
+function SOAPCall() { 
+    var me = this; 
+    var req = null; 
+    // branch for native XMLHttpRequest object 
+    if (window.XMLHttpRequest) { 
+        try { 
+            req = new XMLHttpRequest(); 
+        } catch(e) { 
+            req = null; 
+        } 
+    // branch for IE/Windows ActiveX versions 
+    } else if (window.ActiveXObject) { 
+        try { 
+            req = new ActiveXObject("Msxml2.XMLHTTP"); 
+        } catch(e) { 
+            try { 
+               req = new ActiveXObject("Microsoft.XMLHTTP"); 
+            } catch(e) { 
+               req = null; 
+            } 
+        } 
+    } else { 
+            alert("This example requires a browser with XML support, such as IE5+/Windows, Mozilla, Safari 1.2, or Opera 8.") 
+    } 
+    // preserve reference to request object for later 
+    this.request = req; 
+    // "public" method to be invoked whenever 
+    this.loadSOAP = function(url, data, loadHandler) { 
+        if (this.request) { 
+            this.request.open("POST", url); 
+            this.request.onreadystatechange = function () {loadHandler(me)}; 
+            soapReq.setRequestHeader("Content-Type","text/xml; charset=utf-8"); 
+            soapReq.setRequestHeader("SOAPAction",""); 
+            this.request.send(data); 
+        } 
+    }; 
+}

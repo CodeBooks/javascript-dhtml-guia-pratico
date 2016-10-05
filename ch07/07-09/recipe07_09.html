@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<script type="text/javascript">
+function makeNewFrameset() {
+    var newFrame1 = document.createElement("frame");
+    newFrame1.id = "newFrame1";
+    newFrame1.name = "newFrame1";
+    newFrame1.src = "altNavBar.html"
+    var newFrame2 = document.createElement("frame");
+    newFrame2.id = "newFrame2";
+    newFrame2.name = "newFrame2";
+    newFrame2.src = "altHome.html"
+    
+    var frameset = document.getElementById("masterFrameset");
+    while (frameset.childNodes.length > 0) {
+        frameset.removeChild(frameset.firstChild);
+    }
+    frameset.cols = null;
+    frameset.rows = "80, *";
+    frameset.appendChild(newFrame1);
+    frameset.appendChild(newFrame2);
+}
+function makeNewFrameset2() {
+    var frag = document.createDocumentFragment();
+    var newFrame= document.createElement("frame");
+    newFrame.id = "newFrame1";
+    newFrame.name = "newFrame1";
+    newFrame.src = "altNavBar.html"
+    frag.appendChild(newFrame);
+    newFrame = document.createElement("frame");
+    newFrame.id = "newFrame2";
+    newFrame.name = "newFrame2";
+    newFrame.src = "altHome.html"
+    frag.appendChild(newFrame);
+    
+    var frameset = document.getElementById("masterFrameset");
+    while (frameset.childNodes.length > 0) {
+        frameset.removeChild(frameset.firstChild);
+    }
+    frameset.cols = null;
+    frameset.rows = "30%, *";
+    frameset.appendChild(frag);
+}
+
+</script>
+</head>
+<frameset id="masterFrameset" frameborder="no" cols="250,*">
+	<frame id="controls" name="controlsFrame" src="toc.html" />
+	<frame id="content" name="contentFrame" src="content.html" />
+</frameset>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media, Inc.
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Recipe 13.14</title>
+<link rel="stylesheet" id="mainStyle" href="../css/cookbook.css" type="text/css" />
+<style type="text/css">
+body {height: 400px}
+#sliderControl {
+    position: absolute; 
+    top: 100px; 
+    left: 200px
+}
+#sliderControl2 {
+    position: absolute; 
+    top: 450px; 
+    left: 200px
+}
+#slide2 {
+    position: absolute; 
+    top: -11px; 
+    left: 97px; 
+    z-index: 1
+}
+#sliderScale2 {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    z-index: 0; 
+    border: 3px ridge black
+}
+#sliderScale {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    z-index: 0; 
+    border: 3px ridge black
+}
+#slide {
+    position: absolute; 
+    top: -11px; 
+    left: 97px; 
+    z-index: 1
+}
+#colorbox {
+    position: absolute; 
+    top: 300px; 
+    left: 200px; 
+    width: 300px; 
+    height: 100px; 
+    background-color: rgb(255, 255, 0)
+}
+</style>
+<script src="../js/eventsManager.js"></script>
+<script src="../js/DHTML3API.js"></script>
+<script src="slideControl.js"></script>
+<script type="text/javascript">
+function updateDisplay(pct) {
+    var max = 255;
+    var min = 0
+    var red, green;
+    if (pct < .5) {
+        green = max;
+        red = Math.round(max * (pct * 2));
+    } else {
+        red = max;
+        green = Math.round(max * ((1-pct) * 2));
+    }
+    document.getElementById("colorbox").style.backgroundColor = "rgb(" + red + ", " + green + ", 0)";
+}
+
+function initSlide() {
+    if (slideObject) {
+        slideObject.addSlide({zone:{left:-35, top:-11, right:227, bottom:-11}, id:"slide", updateFunction:updateDisplay});
+    }
+}
+addOnLoadEvent(initSlide);
+</script>
+</head>
+<body>
+<h1>Slider Control</h1>
+<hr /> 
+<div id="sliderControl">
+<img id="sliderScale" src="slider_bg.png" width="300" height="141" alt="Slide Scale" />
+<img id="slide" class="draggable" src="slider_slide.png" width="116" height="168" alt="Slide" />
+</div>
+<div id="colorbox"></div>
+
+</body>
+</html>

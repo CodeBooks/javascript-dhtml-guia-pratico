@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media, Inc.
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Recipe 14.6</title>
+<link rel="stylesheet" id="mainStyle" href="../css/cookbook.css" type="text/css" />
+<style type="text/css">
+table {table-collapse:collapse; border-spacing:0}
+td {border:2px groove black; padding:7px; background-color:#ccffcc}
+th {border:2px groove black; padding:7px; background-color:#ffffcc}
+.ctr {text-align:center}
+</style>
+<script src="../js/eventsManager.js"></script>
+<script type="text/javascript">
+// constructor function for an XML request object;
+function XMLDoc() {
+    var me = this;
+    var req = null;
+    // branch for native XMLHttpRequest object
+    if(window.XMLHttpRequest) {
+        try {
+            req = new XMLHttpRequest();
+        } catch(e) {
+            req = null;
+        }
+    // branch for IE/Windows ActiveX version
+    } else if(window.ActiveXObject) {
+        try {
+            req = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch(e) {
+            try {
+               req = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch(e) {
+               req = null;
+            }
+        }
+    } else {
+            alert("This example requires a browser with XML support, such as IE5+/Windows, Mozilla, Safari 1.2, or Opera 8.")
+    }
+    // preserve reference to request object for later
+    this.request = req;
+    // "public" method to be invoked whenever
+    this.loadXMLDoc = function(url, loadHandler) {
+        if(this.request) {
+            this.request.open("GET", url, true);
+            this.request.onreadystatechange = function () {loadHandler(me)};
+            this.request.setRequestHeader("Content-Type", "text/xml");
+            this.request.send("");
+        }
+    };
+}
+
+
+// Draw table from XML document tree data
+function drawTable(req) {
+    req = req.request;
+    if (req.readyState == 4 && req.status == 200) {
+        // XML node tree
+        var data = req.responseXML.getElementsByTagName("worldcup")[0];
+        var tbody = document.getElementById("matchData");
+        var tr, td, i, j, oneRecord;
+        // for td class attributes
+        var classes = ["ctr","","","","ctr"];
+        for (i = 0; i < data.childNodes.length; i++) {
+            // use only 1st level element nodes to skip 1st level text nodes in NN
+            if (data.childNodes[i].nodeType == 1) {
+                // one final match record
+                oneRecord = data.childNodes[i];
+                tr = tbody.insertRow(tbody.rows.length);
+                td = tr.insertCell(tr.cells.length);
+                td.setAttribute("class",classes[tr.cells.length-1]);
+                td.innerHTML = 
+                  oneRecord.getElementsByTagName("year")[0].firstChild.nodeValue;
+                td = tr.insertCell(tr.cells.length);
+                td.setAttribute("class",classes[tr.cells.length-1]);
+                td.innerHTML = 
+                   oneRecord.getElementsByTagName("location")[0].firstChild.nodeValue;
+                td = tr.insertCell(tr.cells.length);
+                td.setAttribute("class",classes[tr.cells.length-1]);
+                td.innerHTML = 
+                   oneRecord.getElementsByTagName("winner")[0].firstChild.nodeValue;
+                td = tr.insertCell(tr.cells.length);
+                td.setAttribute("class",classes[tr.cells.length-1]);
+                td.innerHTML = 
+                   oneRecord.getElementsByTagName("loser")[0].firstChild.nodeValue;
+                td = tr.insertCell(tr.cells.length);
+                td.setAttribute("class",classes[tr.cells.length-1]);
+                td.innerHTML = 
+                   oneRecord.getElementsByTagName("winscore")[0].firstChild.nodeValue + 
+                   " - " + 
+                   oneRecord.getElementsByTagName("losscore")[0].firstChild.nodeValue;
+            }
+        }
+    }
+}
+
+function initXML() {
+    var outlineRequest = new XMLDoc();
+    outlineRequest.loadXMLDoc("worldCupFinals.xml", drawTable);
+}
+
+addOnLoadEvent(initXML);
+</script>
+</head>
+<body>
+<h1>Transforming XML into HTML Tables</h1>
+<hr /> 
+
+<table id="cupFinals">
+<thead>
+<tr><th>Year</th>
+    <th>Host Country</th>
+    <th>Winner</th>
+    <th>Loser</th>
+    <th>Score (Win - Lose)</th>
+</tr>
+</thead>
+<tbody id="matchData"></tbody>
+</table>
+
+</body>
+</html>

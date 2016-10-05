@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Recipe 10.7</title>
+<link rel="stylesheet" id="mainStyle" href="../css/cookbook.css" type="text/css" />
+
+<style type="text/css">
+.contextMenus {
+    position: absolute; 
+    background-color: #cfcfcf; 
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: #efefef #505050 #505050 #efefef; 
+    display: block; 
+    padding: 3px;
+    visibility: hidden
+}
+.menuItem {
+    cursor: pointer; 
+    font-size: 9pt; 
+    font-family: Arial, Helvetica, sans-serif; 
+    color: black; 
+    padding: 2px;
+    background-color: transparent; 
+    text-decoration: none;
+    height: 1.4em;
+    display: block; 
+    line-height: 1.4em
+}
+.menuItemOn {
+    cursor: pointer; 
+    font-size: 9pt; 
+    font-family: Arial, Helvetica, sans-serif; 
+    color: red; 
+    padding: 2px;
+    background-color: yellow; 
+    text-decoration: underline;
+    height: 1.4em; 
+    display: block; 
+    line-height: 1.4em}
+.contextEntryLive {
+    font-weight: bold; 
+    color: darkred; 
+    cursor: pointer
+}
+</style>
+<script src="../js/eventsManager.js"></script>
+<script type="text/javascript">
+// page-specific context menu data objects
+var cMenu = new Object();
+cMenu["lookup1"] = {menuID:"contextMenu1", 
+    menuItems:[{label:"Merriam-Webster Dictionary", href:"http://www.m-w.com/cgi-bin/dictionary?book=Dictionary&va=sesquipedalian"},
+               {label:"Merriam-Webster Thesaurus", href:"http://www.m-w.com/cgi-bin/dictionary?book=Thesaurus&va=sesquipedalian"}]};
+
+cMenu["lookup2"] = {menuID:"contextMenu2", 
+    menuItems:[{label:"Wyoming Tourist Info", href:"http://www.wyomingtourism.org/"},
+               {label:"State Map", href:"http://www.pbs.org/weta/thewest/places/states/wyoming/"},
+               {label:"cnn.com", href:"http://cnn.looksmart.com/r_search?l&izch&pin=020821x36b42f8a561537f36a1&qc=&col=cnni&qm=0&st=1&nh=10&rf=1&venue=all&keyword=&qp=&search=0&key=wyoming"},
+               {label:"Google Maps", href:"http://maps.google.com/maps?f=q&hl=en&q=wyoming&layer=&ie=UTF8&z=7&ll=42.916206,-107.226562&spn=4.56153,10.623779&om=1"},
+               {label:"Yahoo Search", href:"http://search.yahoo.com"}]};
+</script>
+<script src="contextMenus.js"></script>
+</head>
+<body>
+<h1>Custom Contextual Menu</h1>
+<hr /> 
+
+<p>This sentence has at least one <span id="lookup1" class="contextEntry">sesquipedalian</span> word
+and mention of the state of <span id="lookup2" class="contextEntry">Wyoming</span>, both of which could have additional lookups.</p>
+
+</body>
+</html>

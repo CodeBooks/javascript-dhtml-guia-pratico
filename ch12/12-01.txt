@@ -1,0 +1,15 @@
+var rolloverImageBank = { 
+    height : 20, 
+    width : 50, 
+    sharedImgURIs : ["img/home", "img/prod", "img/support", "img/contact"], 
+    normalSuffix : "Normal.jpg", 
+    hiliteSuffix : "Hilite.jpg", 
+    preloadImages : function() { 
+        var imgObj = new Image(this.height, this.width); 
+        for (var i = 0; i < this.sharedImgURIs.length; i++) { 
+            imgObj.src = this.sharedImgURIs[i] + this.normalSuffix; 
+            imgObj.src = this.sharedImgURIs[i] + this.hiliteSuffix; 
+        } 
+    } 
+}; 
+rolloverImageBank.preloadImages();

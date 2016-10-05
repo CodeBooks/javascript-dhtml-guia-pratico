@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media, Inc.
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Recipe 12.4</title>
+<style type="text/css">
+#menuWrap {
+            position: relative; 
+            background-image: url(menubarUp.jpg); 
+            width: 680px;
+            height: 110px;
+          }
+
+#menuWrap a {
+            display: block; 
+            position: absolute; 
+            visibility: visible; 
+            top: 0px; 
+            height: 110px; 
+            outline: none
+          }
+#homeArea {
+            left: 0px; 
+            width: 117px; 
+            background-image: none;
+          }
+#homeArea:hover {
+            background-image: url(menubarOver.jpg); 
+            background-position: 0px 0px
+          }
+#homeArea:active {
+            background-image: url(menubarDown.jpg); 
+            background-position: 0px 0px
+           }
+#productsArea {
+            left: 117px; 
+            width: 110px; 
+            background-image: none;
+           }
+#productsArea:hover {
+            background-image: url(menubarOver.jpg); 
+            background-position: -117px 0px
+           }
+#productsArea:active {
+            background-image: url(menubarDown.jpg);
+            background-position: -117px 0px
+           }
+#manualsArea {
+            left: 227px; 
+            width: 110px; 
+            background-image: none
+           }
+#manualsArea:hover {
+            background-image: url(menubarOver.jpg); 
+            background-position: -227px 0px
+           }
+#manualsArea:active {
+            background-image: url(menubarDown.jpg); 
+            background-position: -227px 0px
+           }
+#dealersArea {
+            left: 337px; 
+            width: 110px; 
+            background-image: none
+           }
+#dealersArea:hover {
+            background-image: url(menubarOver.jpg); 
+            background-position: -337px 0px
+           }
+#dealersArea:active {
+            background-image: url(menubarDown.jpg); 
+            background-position: -337px 0px
+           }
+#supportArea {
+            left: 447px; 
+            width: 110px; 
+            background-image: none
+           }
+#supportArea:hover {
+            background-image: url(menubarOver.jpg); 
+            background-position: -447px 0px
+           }
+#supportArea:active {
+            background-image: url(menubarDown.jpg); 
+            background-position: -447px 0px
+           }
+#contactArea {
+            left: 557px; 
+            width: 110px; 
+            background-image: none
+           }
+#contactArea:hover {
+            background-image: url(menubarOver.jpg); 
+            background-position: -557px 0px
+           }
+#contactArea:active {
+            background-image: url(menubarDown.jpg); 
+            background-position: -557px 0px
+           }
+
+</style>
+
+</head>
+<body>
+<h1>Efficient Image Rollovers</h1>
+<hr />
+<div id="menuWrap">
+<a id="homeArea" href="index.html"></a>
+<a id="productsArea" href="products.html"></a>
+<a id="manualsArea" href="products.html"></a>
+<a id="dealersArea" href="products.html"></a>
+<a id="supportArea" href="products.html"></a>
+<a id="contactArea" href="products.html"></a>
+</div>
+</body>
+</html>

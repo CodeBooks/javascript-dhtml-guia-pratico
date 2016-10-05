@@ -1,0 +1,38 @@
+<html>
+<head>
+
+<title>Sample Dialog</title>
+<script language="JavaScript">
+// Close the dialog
+function closeme() {
+    window.close()
+}
+
+// Handle click of OK button
+function handleOK() {
+    if (opener && !opener.closed) {
+        top.dlogBody.transferData()
+        opener.dialogWin.returnFunc()
+    } else {
+        alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
+    }
+    closeme()
+    return false
+}
+
+// Handle click of Cancel button
+function handleCancel() {
+    closeme()
+    return false
+}
+
+</script>
+
+</head>
+<frameset frameborder="no" framespacing="0" rows="*,50" border="0" onload="if (opener && opener.dialogWin.blockEvents) opener.dialogWin.blockEvents()" 
+onunload="if (opener && opener.dialogWin.unblockEvents) opener.dialogWin.unblockEvents()">
+	<frame name="dlogBody" src="dlogContent.html" frameborder="no">
+	<frame name="dlogButtons" src="dlogButtons.html" frameborder="no" scrolling="no">
+</frameset>
+
+</HTML>

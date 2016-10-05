@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media, Inc.
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Scriptable Imagemaps</title>
+<style type="text/css">
+.menuImages {
+			 height: 110px;
+			 width: 680px;
+			 border: 0;
+			 position: absolute; 
+			 top: 0px; 
+			 left: 0px; 
+			 visibility: hidden;
+}
+#menubarUp {visibility: visible}
+</style>
+<script src="../js/eventsManager.js"></script>
+<script type="text/javascript">
+function initMaps() {
+    if (document.getElementById) {
+        var mapIds = initMaps.arguments;            // pass string IDs of containing map elements
+        var i, j, area, areas;
+        for (i = 0; i < mapIds.length; i++) {
+            areas = document.getElementById(mapIds[i]).getElementsByTagName("area");
+    
+            for (j = 0; j < areas.length; j++) {    // loop thru img elements
+                area = areas[j];
+                addEvent(area, "mousedown", imgSwap, false);
+                addEvent(area, "mouseout", imgSwap, false);
+                addEvent(area, "mouseover", imgSwap, false);
+                addEvent(area, "mouseup", imgSwap, false);
+            }
+        }
+    }
+}
+addOnLoadEvent(function() {initMaps("menubarMap")});
+
+// image swapping event handling
+function imgSwap(evt) {
+    evt = (evt) ? evt : event;
+    var elem = (evt.target) ? evt.target : evt.srcElement;
+    var imgClass = elem.parentNode.name;
+    var coords = elem.coords.split(",");
+    var clipVal = "rect(" + coords[1] + "px " +
+                            coords[2] + "px " +
+                            coords[3] + "px " +
+                            coords[0] + "px)";
+    var imgStyle;
+    
+    switch (evt.type) {
+        case "mousedown" :
+            imgStyle = document.getElementById(imgClass + "Down").style;
+            imgStyle.clip = clipVal;
+            imgStyle.visibility = "visible";
+            break;
+        case "mouseout" :
+            document.getElementById(imgClass + "Over").style.visibility = "hidden";
+            document.getElementById(imgClass + "Down").style.visibility = "hidden";
+            break;
+        case "mouseover" :
+            imgStyle = document.getElementById(imgClass + "Over").style;
+            imgStyle.clip = clipVal;
+            imgStyle.visibility = "visible";
+            break
+        case "mouseup" :
+            document.getElementById(imgClass + "Down").style.visibility = "hidden";
+            // guarantee click in IE
+            if (elem.click) {
+                elem.click();
+            }
+            break;
+    }
+    evt.cancelBubble = true;
+    return false;
+}
+
+</script>
+</head>
+<body>
+<h1>Efficient Image Rollovers</h1>
+<hr />
+<div style="position:relative">
+<img id="menubarUp" class="menuImages" src="menubarUp.jpg" alt="menubar" usemap="#menubar" />
+<img id="menubarOver" class="menuImages" src="menubarOver.jpg" alt="menubar" usemap="#menubar" />
+<img id="menubarDown" class="menuImages" src="menubarDown.jpg" alt="menubar" usemap="#menubar" />
+</div>
+<map id="menubarMap" name="menubar">
+	<!-- onclick set to return false to disable links for this demo; remove for your application -->
+	<area shape="rect" coords="8,22,117,86" href="index.html" alt="home" title="home" onclick="return false" />
+	<area shape="rect" coords="120,22,227,86" href="products.html" alt="products" title="view products" onclick="return false" />
+	<area shape="rect" coords="230,22,337,86" href="manuals.html" alt="manuals" title="download manuals" onclick="return false" />
+	<area shape="rect" coords="340,22,447,86" href="dealers.html" alt="dealers" title="find a dealer" onclick="return false" />
+	<area shape="rect" coords="450,22,557,86" href="support.html" alt="support" title="get support" onclick="return false" />
+	<area shape="rect" coords="560,22,667,86" href="contact.html" alt="contact" title="contact us" onclick="return false" />
+</map>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook, 2nd edition"
+     Published by O'Reilly & Associates
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Recipe 8.5</title>
+<link rel="stylesheet" id="mainStyle" href="../css/cookbook.css" type="text/css" />
+<script src="../js/eventsManager.js"></script>
+<script type="text/javascript">
+// global validation object encapsulates validation routines
+var validator = {
+    // validates that the field value string has one or more characters in it
+    isNotEmpty : function(elem) {
+        var str = elem.value;
+        var re = /.+/;
+        if(!str.match(re)) {
+            alert("Please fill in the required field.");
+            setTimeout("validator.focusElement('" + elem.form.name + "', '" + elem.name + "')", 0);
+            return false;
+        } else {
+            return true;
+        }
+    },
+    //validates that the entry is a positive or negative number
+    isNumber : function(elem) {
+        var str = elem.value;
+        var re = /^[-]?\d*\.?\d*$/;
+        str = str.toString();
+        if (!str.match(re)) {
+            alert("Enter only numbers into the field.");
+            setTimeout("validator.focusElement('" + elem.form.name + "', '" + elem.name + "')", 0);
+            return false;
+        }
+        return true;
+    },
+    // validates that the entry is 16 characters long
+    isLen16 : function(elem) {
+        var str = elem.value;
+        var re = /\b.{16}\b/;
+        if (!str.match(re)) {
+            alert("Entry does not contain the required 16 characters.");
+            setTimeout("validator.focusElement('" + elem.form.name + "', '" + elem.name + "')", 0);
+            return false;
+        } else {
+            return true;
+        }
+    },
+    // validates that the entry is formatted as an e-mail address
+    isEMailAddr : function(elem) {
+        var str = elem.value;
+        var re = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+        if (!str.match(re)) {
+            alert("Verify the e-mail address format.");
+            setTimeout("validator.focusElement('" + elem.form.name + "', '" + elem.name + "')", 0);
+            return false;
+        } else {
+            return true;
+        }
+    },
+    // validate that the user made a selection other than default
+    isChosen : function(select) {
+        if (select.selectedIndex == 0) {
+            alert("Please make a choice from the list.");
+            return false;
+        } else {
+            return true;
+        }
+    },
+    // validate that the user has checked one of the radio buttons
+    isValidRadio : function(radio) {
+        var valid = false;
+        for (var i = 0; i < radio.length; i++) {
+            if (radio[i].checked) {
+                return true;
+            }
+        }
+        alert("Make a choice from the radio buttons.");
+        return false;
+    },
+    focusElement : function(formName, elemName) {
+        var elem = document.forms[formName].elements[elemName];
+        elem.focus();
+        elem.select();
+    }
+}
+
+// batch validation router tailored for "sampleForm"
+function validateSampleForm(form, evt) {
+    if (validator.isNotEmpty(form.name1)) {
+        if (validator.isNotEmpty(form.name2)) {
+            if (validator.isNotEmpty(form.eMail)) {
+                if (validator.isEMailAddr(form.eMail)) {
+                    if (validator.isChosen(form.continent)) {
+                        if (validator.isValidRadio(form.accept)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (evt.preventDefault) {
+        evt.preventDefault();
+    }
+    evt.returnValue = false;
+    return false;
+}
+
+// dispatcher, in case of multiple forms
+function dispatchValidation(evt) {
+    evt = (evt) ? evt : window.event;
+    if (evt) {
+        var elem = (evt.target) ? evt.target : evt.srcElement;
+        if (elem.name == "sampleForm") {
+            validateSampleForm(elem, evt);        
+        }
+    }
+}
+
+function setElementEvents() {
+    addEvent(document.getElementById("sampleForm"), "submit", dispatchValidation, false);
+    // set more element events here, if needed
+}
+// from eventsManager.js
+addOnLoadEvent(setElementEvents);
+</script>
+</head>
+<body>
+<h1>Form Validations</h1>
+<hr /> 
+<form method="GET" action="cgi-bin/register.pl"
+    name="sampleForm" id="sampleForm">
+First Name: <input type="text" size="30" name="name1" id="name1" 
+    onchange="validator.isNotEmpty(this)" /><br>
+Last Name: <input type="text" size="30" name="name2" id="name2" 
+    onchange="validator.isNotEmpty(this)" /><br>
+E-mail Address: <input type="text" size="30" name="eMail" id="eMail" 
+    onchange="if (validator.isNotEmpty(this)) {validator.isEMailAddr(this)}" /><br>
+Your Region: <select name="continent" id="continent">
+    <option value="" selected>Choose One:</option>
+    <option value="Africa">Africa</option>
+    <option value="Asia">Asia</option>
+    <option value="Australia">Australia/Pacific</option>
+    <option value="Europe">Europe</option>
+    <option value="North America">North America</option>
+    <option value="South America">South America</option>
+</select><br>
+Licensing Terms: 
+    <input type="radio" name="accept" id="accept1" value="agree" />I agree
+    <input type="radio" name="accept" id="accept2" value="refuse" />I do not agree
+<br>
+<input type="reset" /> <input type="submit" />
+</form>
+</body>
+</html>

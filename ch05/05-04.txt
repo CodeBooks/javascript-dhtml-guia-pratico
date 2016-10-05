@@ -1,0 +1,2 @@
+var re = /(rv:)(\d+\.\d+\.?\d*\.?\d*)/; 
+var mozVer = a.exec(navigator.userAgent)[2]; 

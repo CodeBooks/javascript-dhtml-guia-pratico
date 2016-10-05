@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media, Inc.
+     Copyright 2007 Danny Goodman
+-->
+<html>
+    <head>
+        <title>Recipe 12.7</title>
+        <link rel="stylesheet" id="mainStyle" href="../css/cookbook.css" type="text/css" />
+        <style id="normalStyle" type="text/css">
+            body {font-family: Verdana, Helvetica, sans-serif; background-color: #ffffff}
+            .smallText {font-size: xx-small}
+            .mediumText {font-size: small}
+            .largeText {font-size: large}
+            #textSizer {text-align: right; display: none}
+            .textSize {border: 1px solid black}
+            .textSize:hover {cursor: pointer}
+        </style>
+        <script src="../js/eventsManager.js"></script>
+        <script src="../js/cookieManager.js"></script>
+        <script type="text/javascript">
+            // write style sheet link
+            var styleCookie = cookieMgr.getCookie("fontSize") || "medium";
+            document.write("<link rel='stylesheet' type='text/css' href='" + styleCookie + "Font.css' />");
+
+            // invoked by clicking on sizer icons
+            function changeSizeStyle(evt) {
+                evt = evt || window.event;
+                var elem = evt.target || evt.srcElement;
+                var re = /(.*)(Styler\b)/;
+                var sizeStyle = re.exec(elem.id)[1];
+                cookieMgr.setCookie("fontSize", sizeStyle, cookieMgr.getExpDate(120, 0, 0));
+                document.body.className = sizeStyle + "Text";
+                setIconBorder(elem.id);
+            }
+            function setIconBorder(elemID) {
+                elemID = (elemID) ? elemID :
+                        (cookieMgr.getCookie("fontSize") ?
+                                cookieMgr.getCookie("fontSize") + "Styler" : "mediumStyler");
+                var iconIDs = ["smallStyler", "mediumStyler", "largeStyler"];
+                for (var i = 0; i < iconIDs.length; i++) {
+                    document.getElementById(iconIDs[i]).style.borderColor = "black";
+                }
+                document.getElementById(elemID).style.borderColor = "red";
+            }
+            function setEvents() {
+                addEvent(document.getElementById("smallStyler"), "click", changeSizeStyle, false);
+                addEvent(document.getElementById("mediumStyler"), "click", changeSizeStyle, false);
+                addEvent(document.getElementById("largeStyler"), "click", changeSizeStyle, false);
+            }
+            addOnLoadEvent(function() {
+                setIconBorder()
+            });
+            addOnLoadEvent(setEvents);
+        </script>
+    </head>
+    <body>
+        <h1 style="font-size:26px; font-weight:bold">User-selectable Font Sizes</h1>
+        <div id="textSizer">
+            <img src="fontSizer.jpg" height="18" width="72" alt="Font Sizer"><img 
+                    id="smallStyler" class="textSize" src="fontSmall.jpg" height="18" width="18" 
+                    alt="Smallest" /><img id="mediumStyler" class="textSize" src="fontMedium.jpg"  
+                    height="18" width="18" alt="Default" /><img id="largeStyler"
+                    class="textSize" src="fontLarge.jpg" height="18" width="18" alt="Biggest" />
+        </div>
+        <hr /> 
+
+        <p>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor 
+            incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud 
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo 
+            consequat.
+        </p>
+
+
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+     Example File From "JavaScript and DHTML Cookbook"
+     Second Edition
+     Published by O'Reilly Media
+     Copyright 2007 Danny Goodman
+-->
+<html>
+<head>
+<title>Content</title>
+<script type="text/javascript" src="../js/cookieManager.js"></script>
+<script type="text/javascript">
+function setToggleUI() {
+    var label = "<<Hide Navbar";
+    if (document.getElementById) {
+        if (cookieMgr.getCookie("frameHidden") == "true") {
+            label = "Show Navbar>>";
+        }
+        var newElem = document.createElement("button");
+        newElem.onclick = initiateToggle;
+        var newText = document.createTextNode(label);
+        newElem.appendChild(newText);
+        document.getElementById("togglePlaceholder").appendChild(newElem);
+    }
+}
+function initiateToggle(evt) {
+    evt = (evt) ? evt : event;
+    var elem = (evt.target) ? evt.target : evt.srcElement;
+    if (elem.nodeType == 3) {
+        elem = elem.parentNode;
+    }
+    parent.toggleFrame(elem);
+}
+
+</script>
+</head>
+<body onload="setToggleUI()">
+<p>
+<span id="togglePlaceholder"></span></p>
+</body>
+</html>

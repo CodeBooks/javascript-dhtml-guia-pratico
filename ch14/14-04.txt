@@ -1,0 +1,69 @@
+// constructor function for an XML request object; 
+function XMLDoc() { 
+    var me = this; 
+    var req = null; 
+    // branch for native XMLHttpRequest object 
+    if (window.XMLHttpRequest) { 
+        try { 
+            req = new XMLHttpRequest(); 
+        } catch(e) { 
+            req = null; 
+        } 
+    // branch for IE/Windows ActiveX versions 
+    } else if (window.ActiveXObject) { 
+        try { 
+            req = new ActiveXObject("Msxml2.XMLHTTP"); 
+        } catch(e) { 
+            try { 
+               req = new ActiveXObject("Microsoft.XMLHTTP"); 
+            } catch(e) { 
+               req = null; 
+            } 
+        } 
+    } else { 
+            alert("This example requires a browser with XML support, such as IE5+/Windows, Mozilla, Safari 1.2, or Opera 8.") 
+    } 
+    // preserve reference to request object for later 
+    this.request = req; 
+    // "public" method to be invoked whenever 
+    this.loadXMLDoc = function(url, loadHandler) { 
+        if (this.request) { 
+            this.request.open("GET", url, true); 
+            this.request.onreadystatechange = function () {loadHandler(me)}; 
+            this.request.setRequestHeader("Content-Type", "text/xml"); 
+            this.request.send(""); 
+        } 
+    }; 
+}
+
+function initXML() {
+    var outlineRequest = new XMLDoc();
+    outlineRequest.loadXMLDoc("myData.xml", insertOutline);
+}
+
+addOnLoadEvent(initXML);
+
+
+----------
+
+<xml id="myData" style="display:none">
+<worldcup>
+    <final>
+        <location>Uruguay</location>
+        <year>1930</year>
+        <winner>Uruguay</winner>
+        <winscore>4</winscore>
+        <loser>Argentina</loser>
+        <losscore>2</losscore>
+    </final>
+    <final>
+        <location>Italy</location>
+        <year>1934</year>
+        <winner>Italy</winner>
+        <winscore>2</winscore>
+        <loser>Czechoslovakia</loser>
+        <losscore>1</losscore>
+    </final>
+    É
+</worldcup>
+</xml>

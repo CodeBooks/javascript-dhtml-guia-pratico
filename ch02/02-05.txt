@@ -1,0 +1,58 @@
+var num = 123.45; 
+preciseNum = num.toPrecision(7);          // preciseNum is now 123.4500 
+preciseNum = num.toPrecision(4);          // preciseNum is now 123.5 
+preciseNum = num.toPrecision(3);          // preciseNum is now 123 
+preciseNum = num.toPrecision(2);          // preciseNum is now 1.2e+2 
+
+------------------------
+
+function formatNumber (num, decplaces) { 
+    // convert in case it arrives as a string value 
+    num = parseFloat(num); 
+    // make sure it passes conversion 
+    if (!isNaN(num)) { 
+        // multiply value by 10 to the decplaces power; 
+        // round the result to the nearest integer; 
+        // convert the result to a string 
+        var str = "" + Math.round (eval(num) * Math.pow(10,decplaces)); 
+        // exponent means value is too big or small for this routine 
+        if (str.indexOf("e") != -1) { 
+            return "Out of Range"; 
+        } 
+        // if needed for small values, pad zeros 
+        // to the left of the number 
+        while (str.length <= decplaces) { 
+            str = "0" + str; 
+        } 
+        // calculate decimal point position 
+        var decpoint = str.length - decplaces; 
+        // assemble final result from: (a) the string up to the position of 
+        // the decimal point; (b) the decimal point; and (c) the balance 
+        // of the string. Return finished product. 
+        return str.substring(0,decpoint) + "." + str.substring(decpoint,str.length); 
+    } else { 
+        return "NaN"; 
+    } 
+} 
+
+------------------------
+
+function formatCommas(numString) { 
+    // extract decimal and digits to right (if any) 
+    var re = /\.\d{1,}/; 
+    var frac = (re.test(numString)) ? re.exec(numString) : ""; 
+    // divide integer portion into three-digit groups 
+    var int = parseInt(numString,10).toString(); 
+    re = /(-?\d+)(\d{3})/; 
+    while (re.test(int)) { 
+        int = int.replace(re, "$1,$2"); 
+    } 
+    return int + frac; 
+} 
+
+------------------------
+
+function stripCommas(numString) { 
+    var re = /,/g; 
+    return numString.replace(re,""); 
+} 

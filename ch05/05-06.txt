@@ -1,0 +1,6 @@
+var ua = navigator.userAgent; 
+var operaVersion = null; 
+if (ua.indexOf("Opera") != -1) { 
+    var re = /(Opera\W)(\d*\.\d*)/; 
+    var operaVersion = re.exec(ua)[2]; 
+} 
